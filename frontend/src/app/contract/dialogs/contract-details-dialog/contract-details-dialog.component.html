@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>Contract Details</h2>
+<hr>
+
+<mat-dialog-content>
+  <div class="row">
+    <div class="col-6">Contract Number:</div>
+    <div class="col-6">{{contract?.contractNumber}}</div>
+  </div>
+  <hr>
+
+  <div class="row">
+    <div class="col-6">Monthly Rate:</div>
+    <div class="col-6">{{contract?.monthlyRate | currency:'EUR'}}</div>
+  </div>
+  <hr>
+
+  <div class="row">
+    <div class="col-6">Customer:</div>
+    <div class="col-4">
+      {{contract?.customer?.fullName}}
+    </div>
+    <div class="col-2">
+      <button mat-flat-button (click)="openCustomerDetailsDialog()">
+        <mat-icon>open_in_new</mat-icon>
+      </button>
+    </div>
+  </div>
+  <hr>
+
+  <div class="row">
+    <div class="col-6">Vehicle:</div>
+    <div class="col-4">
+      {{contract?.vehicle?.vehicleModel}} <br> VIN: {{contract?.vehicle?.vin || '-'}}
+    </div>
+    <div class="col-2">
+      <button mat-flat-button (click)="openVehicleDetailsDialog()">
+        <mat-icon>open_in_new</mat-icon>
+      </button>
+    </div>
+  </div>
+  <hr>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button class="mat-raised-button" (click)="close()">Close</button>
+</mat-dialog-actions>

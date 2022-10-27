@@ -9,7 +9,5 @@ import java.util.Optional;
 
 public interface ContractRepository extends JpaRepository<LeasingContract, Long> {
 
-    Page<LeasingContract> findAll(Pageable pageable);
-
     Optional<LeasingContract> findByContractNumber(Long contractNumber);
 }

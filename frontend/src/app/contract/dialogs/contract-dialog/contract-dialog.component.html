@@ -1,0 +1,112 @@
+<h2 mat-dialog-title>Contract Management</h2>
+<hr>
+
+<mat-dialog-content [formGroup]="form">
+  <!--Contract Number (Readonly)-->
+  <ng-container class="mb-3" *ngIf="contract">
+    <div class="row">
+      <div class="col-5">
+        <span class="heading">Contract Number:</span>
+      </div>
+      <div class="col-5">
+        <span class="value">{{contract.contractNumber}}</span>
+      </div>
+    </div>
+    <hr>
+  </ng-container>
+
+
+  <!--Monthly Rate-->
+  <div>
+    <mat-form-field appearance="legacy">
+      <mat-label>Monthly Rate</mat-label>
+      <input type="number" step="0.01" matInput placeholder="Monthly Leasing Rate" formControlName="monthlyRate">
+      <mat-icon matSuffix>euro_symbol</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <!--Choose Customer-->
+  <div>
+    <ng-container *ngIf="selectedCustomer">
+      <div class="row">
+        <div class="col-4">
+          <span class="heading">Customer:</span>
+        </div>
+        <div class="col-4">
+          <span class="value">{{selectedCustomer.fullName}}</span>
+        </div>
+        <div class="col-4">
+          <button mat-flat-button (click)="editCustomer()"><mat-icon>edit</mat-icon></button>
+        </div>
+      </div>
+      <hr>
+    </ng-container>
+    <mat-form-field appearance="legacy" *ngIf="!selectedCustomer">
+      <mat-label>Choose Customer: (Filter by by Last Name)</mat-label>
+      <input type="text"
+             placeholder="Choose one"
+             aria-label="lastNameFilter"
+             matInput
+             [ngModel]="selectedCustomer"
+             [ngModelOptions]="{standalone: true}"
+             (ngModelChange)="filterCustomers($event)"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onCustomerSelected($event)">
+        <mat-option *ngFor="let option of filteredCustomers" [value]="option">
+          {{option.fullNameWithBirthDate}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <!--Choose Vehicle-->
+  <div>
+    <ng-container *ngIf="selectedVehicle">
+      <div class="row">
+        <div class="col-4">
+          <span class="heading">Vehicle:</span>
+        </div>
+        <div class="col-4">
+          <span class="value">{{selectedVehicle.vehicleModel}}</span>
+          <br>
+          <span class="value">VIN: {{selectedVehicle.vin || '-'}}</span>
+        </div>
+        <div class="col-4">
+          <button mat-flat-button (click)="editVehicle()"><mat-icon>edit</mat-icon></button>
+        </div>
+      </div>
+      <hr>
+    </ng-container>
+    <ng-container *ngIf="!selectedVehicle">
+      <ng-container *ngIf="filteredVehicles?.length == 0">
+          <span style="color: darkred">Sorry! The vehicles based on your filter are booked.
+            Click <a (click)="cancelVehicleChanges()">here</a> to check available options.
+          </span>
+      </ng-container>
+      <ng-container *ngIf="filteredVehicles?.length != 0">
+        <mat-form-field appearance="legacy">
+          <mat-label>Filter by Brand</mat-label>
+          <input type="text"
+                 placeholder="Choose one"
+                 aria-label="brandFilter"
+                 matInput
+                 [ngModel]="selectedVehicle"
+                 [ngModelOptions]="{standalone: true}"
+                 (ngModelChange)="filterVehicles($event)"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onVehicleSelected($event)">
+            <mat-option *ngFor="let option of filteredVehicles" [value]="option">
+              {{option.vehicleModel}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </ng-container>
+    </ng-container>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="mat-raised-button" (click)="close()">Cancel</button>
+  <button class="mat-raised-button primary" (click)="save()">Save</button>
+</mat-dialog-actions>
+
+

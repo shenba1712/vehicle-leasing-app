@@ -1,0 +1,19 @@
+button {
+  width: 100%;
+  background-color: #e1eedd;
+  color: #183a1d;
+}
+
+@media screen and (max-width: 575px) {
+  .margin-sm {
+    margin: 8px 8px 8px 0;
+  }
+
+  .centered {
+    margin-top: 50%;
+  }
+}
+
+.centered {
+  margin-top: 20%;
+}

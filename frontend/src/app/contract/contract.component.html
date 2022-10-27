@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="container-fluid">
+    <div class="text-center">
+      <h1>Contract Overview</h1>
+      <button (click)="openContractDialog()" mat-raised-button>Add new contract</button>
+    </div>
+    <div class="mt-5">
+      <mat-spinner *ngIf="loading"></mat-spinner>
+      <ng-container *ngIf="!loading">
+        <div class="row pt-3 mat-elevation-z8" *ngIf="hasContracts; else emptyBlock">
+          <mat-table [dataSource]="contracts">
+            <ng-container matColumnDef="contractNumber">
+              <mat-header-cell *matHeaderCellDef> Contract Number </mat-header-cell>
+              <mat-cell *matCellDef="let contract"> {{contract.contractNumber}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="customer">
+              <mat-header-cell *matHeaderCellDef> Customer </mat-header-cell>
+              <mat-cell *matCellDef="let contract"> {{contract.customer.fullName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="vehicle">
+              <mat-header-cell *matHeaderCellDef> Vehicle </mat-header-cell>
+              <mat-cell *matCellDef="let contract"> {{contract.vehicle.vehicleModel}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="vin">
+              <mat-header-cell *matHeaderCellDef> VIN </mat-header-cell>
+              <mat-cell *matCellDef="let contract">
+                {{contract.vehicle.vin || '-'}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="monthlyRate">
+              <mat-header-cell *matHeaderCellDef> Monthly Rate </mat-header-cell>
+              <mat-cell *matCellDef="let contract">
+                {{contract.monthlyRate | currency: 'EUR'}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="price">
+              <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+              <mat-cell *matCellDef="let contract">
+                {{contract.vehicle.price | currency: 'EUR'}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+              <mat-cell *matCellDef="let contract">
+                <button mat-flat-button (click)="openContractDialog(contract, true)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-flat-button (click)="openContractDetailsDialog(contract)">
+                  <mat-icon>open_in_new</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator [length]="totalResults"
+                         [pageSize]="50"
+                         (page)="nextPage($event)"
+                         [showFirstLastButtons]="true">
+          </mat-paginator>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyBlock>
+  <div class="card text-center mb-3">
+    <div class="card-body">
+      <h2 class="card-title" style="font-size: x-large">We're just starting!</h2>
+      <div class="card-text">
+        <div style="font-size: large">
+          <p>Please add leasing contracts to see their details here</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

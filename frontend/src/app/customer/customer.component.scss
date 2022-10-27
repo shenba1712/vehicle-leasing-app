@@ -1,0 +1,42 @@
+button {
+  background-color: #e1eedd;
+  color: #183a1d;
+}
+
+mat-table {
+  width: 100%;
+  mat-header-cell, mat-cell {
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  mat-table {
+    mat-header-cell, mat-cell {
+      justify-content: center;
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  mat-table {
+    mat-header-cell, mat-cell {
+      max-width: 100px;
+      margin: 0 3px;
+    }
+    button {
+      background-color: white;
+    }
+  }
+}
+
+mat-spinner {
+  margin: 0 auto;
+}
+
+::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #e1eedd !important;
+}
+

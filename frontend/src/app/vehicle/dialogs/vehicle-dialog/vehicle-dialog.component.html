@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>Vehicle Management</h2>
+<hr>
+
+<mat-dialog-content [formGroup]="form">
+  <!--Brand-->
+  <div>
+    <mat-form-field appearance="legacy">
+      <mat-label>Brand</mat-label>
+      <mat-select (selectionChange)="loadModels()" formControlName="brand">
+        <mat-option [value]="brand" *ngFor="let brand of brands">{{brand}}</mat-option>
+      </mat-select>
+      <mat-icon matSuffix>directions_car</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <!--Model-->
+  <div>
+    <mat-form-field appearance="legacy">
+      <mat-label>Model</mat-label>
+      <mat-select formControlName="model" [disabled]="brand.invalid">
+        <mat-option [value]="model" *ngFor="let model of models">{{model}}</mat-option>
+      </mat-select>
+      <mat-icon matSuffix>local_offer</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <!--Model Year-->
+  <div>
+    <mat-form-field appearance="legacy">
+      <mat-label>Model Year</mat-label>
+      <input type="number" matInput placeholder="Model Year" formControlName="modelYear">
+      <mat-icon matSuffix>calendar_today</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <!--VIN-->
+  <div>
+    <mat-form-field appearance="legacy">
+      <mat-label>VIN</mat-label>
+      <input matInput placeholder="VIN" formControlName="vin">
+      <mat-icon matSuffix>info</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <!--Price-->
+  <div>
+    <mat-form-field appearance="legacy">
+      <mat-label>Price</mat-label>
+      <input type="number" step="0.01" matInput placeholder="Price" formControlName="price">
+      <mat-icon matSuffix>euro_symbol</mat-icon>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="mat-raised-button" (click)="close()">Cancel</button>
+  <button class="mat-raised-button primary" (click)="save()">Save</button>
+</mat-dialog-actions>
